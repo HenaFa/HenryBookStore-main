@@ -35,6 +35,7 @@ public class BookController {
 //tallentaa
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(Book book) {
+		System.out.println("Test" + book);
 		repository.save(book);
 		return "redirect:booklist";
 	}

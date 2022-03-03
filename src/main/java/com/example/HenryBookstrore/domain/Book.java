@@ -89,7 +89,7 @@ public class Book {
 		return category;
 	}
 
-	public void setDepartment(Category category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 
