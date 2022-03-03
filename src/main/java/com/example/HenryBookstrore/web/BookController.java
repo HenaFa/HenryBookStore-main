@@ -9,21 +9,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.HenryBookstrore.domain.Book;
 import com.example.HenryBookstrore.domain.BookRepository;
+import com.example.HenryBookstrore.domain.CategoryRepository;
+
 
 @Controller
 public class BookController {
 	@Autowired
 	private BookRepository repository;
+	
+	@Autowired
+	private CategoryRepository crepository;
 //listaa
 	@RequestMapping(value = { "/", "/booklist" })
 	public String bookList(Model model) {
 		model.addAttribute("books", repository.findAll());
 		return "booklist";
 	}
-//lisää kirjan
+//lisää kirja
 	@RequestMapping(value = "/add")
 	public String addBook(Model model) {
 		model.addAttribute("book", new Book());
+		model.addAttribute("categories", crepository.findAll());
 		return "addbook";
 	}
 //tallentaa
@@ -39,9 +45,10 @@ public class BookController {
 		return "redirect:../booklist";
 	}
 //edittaus
-	@RequestMapping("/edit/{id}")
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editBook(@PathVariable("id") Long bookId, Model model) {
 		model.addAttribute("book", repository.findById(bookId));
+		model.addAttribute("categories", crepository.findAll());
 		return "editBook.html";
 	}
 }
